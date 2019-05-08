@@ -31,7 +31,7 @@ class Todo extends React.Component {
           <i className={classCheck} />
         </button>
 
-        <button className="delete" onClick={() => handleChange(i)}>
+        <button className="delete" onClick={() => handleChange(i, day)}>
           <i class="fas fa-pencil-alt" />
         </button>
 
@@ -43,7 +43,7 @@ class Todo extends React.Component {
               value={InputValue1}
               onChange={onChangeInput1}
             />
-            <button className="delete" onClick={() => changeToDoTitle(i)}>
+            <button className="delete" onClick={() => changeToDoTitle(i, day)}>
               <i class="fas fa-check" />
             </button>
           </React.Fragment>

@@ -192,9 +192,9 @@ class App extends React.Component {
     });
   }
 
-  changeToDoTitle(id) {
+  changeToDoTitle(id, day) {
     const MyArr = this.state.todoText;
-    let arr = MyArr[0][this.state.CurrentDate].map((item, ind) => {
+    let arr = MyArr[0][day].map((item, ind) => {
       if (id === ind) {
         item.title = this.state.InputValue1;
         return item;
@@ -202,26 +202,25 @@ class App extends React.Component {
         return item;
       }
     });
-    MyArr[0][this.state.CurrentDate] = arr;
+    MyArr[0][day] = arr;
     this.setState({
       todoText: MyArr,
     });
   }
 
-  handleChange(id) {
+  handleChange(id, day) {
     const myArr = this.state.todoText;
-    const arr = this.state.todoText[0][this.state.CurrentDate].map(
-      (item, ind) => {
-        if (id === ind && item.checkChange === false) {
-          item.checkChange = true;
-          return item;
-        } else {
-          item.checkChange = false;
-          return item;
-        }
+    const arr = this.state.todoText[0][day].map((item, ind) => {
+      if (id === ind && item.checkChange === false) {
+        item.checkChange = true;
+        return item;
+      } else {
+        item.checkChange = false;
+        return item;
       }
-    );
-    myArr[0][this.state.CurrentDate] = arr;
+    });
+    myArr[0][day] = arr;
+    console.log(day);
     console.log(myArr);
     this.setState({
       todoText: myArr,
