@@ -96,6 +96,7 @@ class App extends React.Component {
       date: getNameDay(new Date()),
       CurrentDate: getNameDay(formatDate(new Date())),
       check: true,
+      key: 1,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -129,6 +130,16 @@ class App extends React.Component {
         todoText: arr,
       });
     }
+  }
+
+  componentWillMount() {
+    document.onkeydown = e => {
+      if (e.keyCode == 116) {
+        this.setState({
+          key: 116,
+        });
+      }
+    };
   }
 
   //Delete ToDo task
@@ -235,11 +246,17 @@ class App extends React.Component {
             <div id="center">NOTE</div>
           </div>
         </header>
-
         <section>
           <Days changeDate={this.onChangeDate} />
         </section>
         <Switch>
+          <Route
+            path={"/"}
+            exact
+            render={() => {
+              return <Redirect to={"/" + getNameDay(formatDate(new Date()))} />;
+            }}
+          />
           <Route
             path={"/Sunday"}
             redner={props => (
@@ -257,6 +274,7 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route
             path={"/Monday"}
             render={props => (
@@ -274,7 +292,6 @@ class App extends React.Component {
               />
             )}
           />
-
           <Route
             path={"/Tuesday"}
             render={props => (
@@ -343,7 +360,6 @@ class App extends React.Component {
               />
             )}
           />
-
           <Route
             path={"/Saturday"}
             render={props => (
@@ -362,11 +378,14 @@ class App extends React.Component {
             )}
           />
         </Switch>
-
-        {/* {(localStorage.getItem("key") === "1") ? (
-          <Redirect to={"/" + getNameDay(formatDate(new Date()))} />
+        {this.state.key == 116 ? (
+          <Route
+            path={"/"}
+            render={() => {
+              return <Redirect to={"/" + getNameDay(formatDate(new Date()))} />;
+            }}
+          />
         ) : null}
-        {localStorage.setItem("key", "0")} */}
 
         <div className="block-add">
           {this.state.ADD_Todo ? (
