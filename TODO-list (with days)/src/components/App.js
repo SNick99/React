@@ -228,7 +228,7 @@ class App extends React.Component {
           </div>
         </header>
         <section>
-          <Days changeDate={this.onChangeDate} />
+          <Days days={days} changeDate={this.onChangeDate} />
         </section>
         <Switch>
           <Route
