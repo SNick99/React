@@ -7,19 +7,7 @@ import AddTodo from "./AddTodo/AddTodo";
 import InputTodo from "./AddTodo/InputTodo";
 import Days from "./Days/Days";
 import BodyToDo from "./BodyToDo/BodyToDo";
-
-function formatDate(date) {
-  let dd = date.getDate();
-  if (dd < 10) dd = "0" + dd;
-
-  let mm = date.getMonth() + 1;
-  if (mm < 10) mm = "0" + mm;
-
-  let yy = date.getFullYear() % 100;
-  if (yy < 10) yy = "0" + yy;
-
-  return "20" + yy + "." + mm + "." + dd;
-}
+import moment from "moment";
 
 const days = [
   "Sunday",
@@ -30,71 +18,64 @@ const days = [
   "Friday",
   "Saturday",
 ];
-const getNameDay = day => {
-  let d = new Date(day);
-  let dayName = days[d.getDay()];
-  return dayName;
-};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      CurrentDate: getNameDay(formatDate(new Date())),
+      CurrentDate: moment().format("dddd"),
 
-      todoText: [
-        {
-          Monday: [
-            {
-              title: "Learn react",
-              active: false,
-              classCheck: "far fa-square",
-              classText: "todo-title",
-              date: "Monday",
-              checkChange: false,
-            },
-            {
-              title: "Learn English",
-              active: false,
-              classCheck: "far fa-square",
-              classText: "todo-title",
-              date: "Monday",
-              checkChange: false,
-            },
-            {
-              title: "Sport",
-              active: false,
-              classCheck: "far fa-square",
-              classText: "todo-title",
-              date: "Monday",
-              checkChange: false,
-            },
-          ],
-          Sunday: [
-            {
-              title: "Sport",
-              active: false,
-              classCheck: "far fa-square",
-              classText: "todo-title",
-              date: "Sunday",
-              checkChange: false,
-            },
-          ],
-          Tuesday: [],
-          Wednesday: [],
-          Thursday: [],
-          Friday: [],
-          Saturday: [],
-        },
-      ],
+      todoText: {
+        Monday: [
+          {
+            title: "Learn react",
+            active: false,
+            classCheck: "far fa-square",
+            classText: "todo-title",
+            date: "Monday",
+            checkChange: false,
+          },
+          {
+            title: "Learn English",
+            active: false,
+            classCheck: "far fa-square",
+            classText: "todo-title",
+            date: "Monday",
+            checkChange: false,
+          },
+          {
+            title: "Sport",
+            active: false,
+            classCheck: "far fa-square",
+            classText: "todo-title",
+            date: "Monday",
+            checkChange: false,
+          },
+        ],
+        Sunday: [
+          {
+            title: "Sport",
+            active: false,
+            classCheck: "far fa-square",
+            classText: "todo-title",
+            date: "Sunday",
+            checkChange: false,
+          },
+        ],
+        Tuesday: [],
+        Wednesday: [],
+        Thursday: [],
+        Friday: [],
+        Saturday: [],
+      },
 
       ADD_Todo: false,
       ADD_I: "far fa-plus-square",
       InputValue: "",
       InputValue1: "",
-      date: getNameDay(new Date()),
-      CurrentDate: getNameDay(formatDate(new Date())),
+      date: moment().format("dddd"),
+      CurrentDate: moment().format("dddd"),
       check: true,
       key: 1,
     };
@@ -114,17 +95,17 @@ class App extends React.Component {
   handleClick(id, day) {
     const arr = this.state.todoText;
 
-    if (arr[0][day][id].active) {
-      arr[0][day][id].active = false;
-      arr[0][day][id].classCheck = "far fa-square";
-      arr[0][day][id].classText = "todo-title";
+    if (arr[day][id].active) {
+      arr[day][id].active = false;
+      arr[day][id].classCheck = "far fa-square";
+      arr[day][id].classText = "todo-title";
       this.setState({
         todoText: arr,
       });
     } else {
-      arr[0][day][id].active = true;
-      arr[0][day][id].classCheck = "far fa-check-square";
-      arr[0][day][id].classText = "todo-title-check";
+      arr[day][id].active = true;
+      arr[day][id].classCheck = "far fa-check-square";
+      arr[day][id].classText = "todo-title-check";
 
       this.setState({
         todoText: arr,
@@ -145,7 +126,7 @@ class App extends React.Component {
   //Delete ToDo task
   onDelete(id, day) {
     const arr = this.state.todoText;
-    arr[0][day].splice(id, 1);
+    arr[day].splice(id, 1);
 
     this.setState({
       todoText: arr,
@@ -168,16 +149,16 @@ class App extends React.Component {
     }
   }
   onAddTodo() {
-    const todos = this.state.todoText; //new array
+    const todos = this.state.todoText;
     if (this.state.InputValue !== "") {
-      todos[0][this.state.CurrentDate].push({
+      todos[this.state.CurrentDate] = {
         title: this.state.InputValue,
         active: false,
         classCheck: "far fa-square",
         classText: "todo-title",
         date: this.state.CurrentDate,
         checkChange: false,
-      });
+      };
       this.setState({
         todoText: todos,
       });
@@ -205,7 +186,7 @@ class App extends React.Component {
 
   changeToDoTitle(id, day) {
     const MyArr = this.state.todoText;
-    let arr = MyArr[0][day].map((item, ind) => {
+    let arr = MyArr[day].map((item, ind) => {
       if (id === ind) {
         item.title = this.state.InputValue1;
         return item;
@@ -213,7 +194,7 @@ class App extends React.Component {
         return item;
       }
     });
-    MyArr[0][day] = arr;
+    MyArr[day] = arr;
     this.setState({
       todoText: MyArr,
     });
@@ -221,7 +202,7 @@ class App extends React.Component {
 
   handleChange(id, day) {
     const myArr = this.state.todoText;
-    const arr = this.state.todoText[0][day].map((item, ind) => {
+    const arr = this.state.todoText[day].map((item, ind) => {
       if (id === ind && item.checkChange === false) {
         item.checkChange = true;
         return item;
@@ -230,7 +211,7 @@ class App extends React.Component {
         return item;
       }
     });
-    myArr[0][day] = arr;
+    myArr[day] = arr;
     console.log(day);
     console.log(myArr);
     this.setState({
@@ -254,14 +235,37 @@ class App extends React.Component {
             path={"/"}
             exact
             render={() => {
-              return <Redirect to={"/" + getNameDay(formatDate(new Date()))} />;
+              return <Redirect to={"/" + moment().format("dddd")} />;
             }}
           />
+
+          {/* {days.map((item) => { //роуты работают а BodyToDO не отображает, хотя данные верные
+          return (
+            <Route
+              path={`${item}`}
+              redner={props => (
+                <BodyToDo
+                  todoText={this.state.todoText[`${item}`]}
+                  CurrentDate={this.state.CurrentDate}
+                  handleClick={this.handleClick}
+                  onDelete={this.onDelete}
+                  url={props.match.url}
+                  changeToDoTitle={this.changeToDoTitle}
+                  checkChange={this.state.checkChange}
+                  onChangeInput1={this.onChangeInput1}
+                  handleChange={this.handleChange}
+                  InputValue1={this.state.InputValue1}
+                />
+              )}
+            />
+          );
+        })} */}
+
           <Route
-            path={"/Sunday"}
-            redner={props => (
+            path={"/Monday"}
+            render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Sunday}
+                todoText={this.state.todoText.Monday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -274,12 +278,11 @@ class App extends React.Component {
               />
             )}
           />
-
           <Route
-            path={"/Monday"}
+            path={"/Sunday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Monday}
+                todoText={this.state.todoText.Sunday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -296,7 +299,7 @@ class App extends React.Component {
             path={"/Tuesday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Tuesday}
+                todoText={this.state.todoText.Tuesday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -313,7 +316,7 @@ class App extends React.Component {
             path={"/Wednesday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Wednesday}
+                todoText={this.state.todoText.Wednesday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -330,7 +333,7 @@ class App extends React.Component {
             path={"/Thursday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Thursday}
+                todoText={this.state.todoText.Thursday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -347,7 +350,7 @@ class App extends React.Component {
             path={"/Friday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Friday}
+                todoText={this.state.todoText.Friday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -364,7 +367,7 @@ class App extends React.Component {
             path={"/Saturday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText[0].Saturday}
+                todoText={this.state.todoText.Saturday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -382,7 +385,7 @@ class App extends React.Component {
           <Route
             path={"/"}
             render={() => {
-              return <Redirect to={"/" + getNameDay(formatDate(new Date()))} />;
+              return <Redirect to={"/" + moment().format("dddd")} />;
             }}
           />
         ) : null}
