@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Link, Route, Redirect } from "react-router-dom";
 import "./App.less";
 import "@fortawesome/fontawesome-free";
-import Todo from "./todo/todo";
+
 import AddTodo from "./AddTodo/AddTodo";
 import InputTodo from "./AddTodo/InputTodo";
 import Days from "./Days/Days";
@@ -18,6 +18,8 @@ const days = [
   "Friday",
   "Saturday",
 ];
+
+export const contextData = React.createContext("without defaultValue");
 
 class App extends React.Component {
   constructor(props) {
@@ -151,14 +153,15 @@ class App extends React.Component {
   onAddTodo() {
     const todos = this.state.todoText;
     if (this.state.InputValue !== "") {
-      todos[this.state.CurrentDate] = {
+      todos[this.state.CurrentDate].push({
         title: this.state.InputValue,
         active: false,
         classCheck: "far fa-square",
         classText: "todo-title",
         date: this.state.CurrentDate,
         checkChange: false,
-      };
+      });
+      console.log(todos);
       this.setState({
         todoText: todos,
       });
@@ -172,7 +175,7 @@ class App extends React.Component {
   }
 
   onChangeInput(event) {
-    console.log(event.target.value);
+    console.log("app" + event.target.value);
     this.setState({
       InputValue: event.target.value,
     });
@@ -239,33 +242,34 @@ class App extends React.Component {
             }}
           />
 
-          {/* {days.map((item) => { //роуты работают а BodyToDO не отображает, хотя данные верные
-          return (
-            <Route
-              path={`${item}`}
-              redner={props => (
-                <BodyToDo
-                  todoText={this.state.todoText[`${item}`]}
-                  CurrentDate={this.state.CurrentDate}
-                  handleClick={this.handleClick}
-                  onDelete={this.onDelete}
-                  url={props.match.url}
-                  changeToDoTitle={this.changeToDoTitle}
-                  checkChange={this.state.checkChange}
-                  onChangeInput1={this.onChangeInput1}
-                  handleChange={this.handleChange}
-                  InputValue1={this.state.InputValue1}
-                />
-              )}
-            />
-          );
-        })} */}
+          {/* {["Sunday"].map(item => {
+            console.log(item);
+            return (
+              <Route
+                path={`/${item}`}
+                redner={props => (
+                  <BodyToDo
+                    todoText={this.state.todoText[`${item}`]}
+                    CurrentDate={this.state.CurrentDate}
+                    handleClick={this.handleClick}
+                    onDelete={this.onDelete}
+                    url={props.match.url}
+                    changeToDoTitle={this.changeToDoTitle}
+                    checkChange={this.state.checkChange}
+                    onChangeInput1={this.onChangeInput1}
+                    handleChange={this.handleChange}
+                    InputValue1={this.state.InputValue1}
+                  />
+                )}
+              />
+            );
+          })} */}
 
           <Route
-            path={"/Monday"}
+            path={"/Sunday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Monday}
+                todoText={this.state.todoText.Sunday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -279,10 +283,10 @@ class App extends React.Component {
             )}
           />
           <Route
-            path={"/Sunday"}
+            path={"/Monday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Sunday}
+                todoText={this.state.todoText.Monday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -392,11 +396,15 @@ class App extends React.Component {
 
         <div className="block-add">
           {this.state.ADD_Todo ? (
-            <InputTodo
-              onAddTodo={this.onAddTodo}
-              onChangeInput={this.onChangeInput}
-              InputValue={this.state.InputValue}
-            />
+            <contextData.Provider
+              value={{
+                onChangeInput: this.onChangeInput,
+                InputValue: this.state.InputValue,
+                onAddTodo: this.onAddTodo,
+              }}
+            >
+              <InputTodo />
+            </contextData.Provider>
           ) : null}
           <AddTodo onInputTodo={this.onInputTodo} ADD_I={this.state.ADD_I} />
         </div>
