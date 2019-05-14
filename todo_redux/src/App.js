@@ -1,13 +1,12 @@
 import React from "react";
 import { Switch, Link, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import "./App.less";
-import "@fortawesome/fontawesome-free";
-import Todo from "./todo/todo";
-import AddTodo from "./AddTodo/AddTodo";
-import InputTodo from "./AddTodo/InputTodo";
-import Days from "./Days/Days";
-import BodyToDo from "./BodyToDo/BodyToDo";
+import "./App.css";
+import Todo from "./components/todo/todo";
+import AddTodo from "./components/AddTodo/AddTodo";
+import InputTodo from "./components/AddTodo/InputTodo";
+import Days from "./components/Days/Days";
+import BodyToDo from "./components/BodyToDo/BodyToDo";
 import moment from "moment";
 
 const days = [
@@ -28,42 +27,8 @@ class App extends React.Component {
       CurrentDate: moment().format("dddd"),
 
       todoText: {
-        Monday: [
-          {
-            title: "Learn react",
-            active: false,
-            classCheck: "far fa-square",
-            classText: "todo-title",
-            date: "Monday",
-            checkChange: false,
-          },
-          {
-            title: "Learn English",
-            active: false,
-            classCheck: "far fa-square",
-            classText: "todo-title",
-            date: "Monday",
-            checkChange: false,
-          },
-          {
-            title: "Sport",
-            active: false,
-            classCheck: "far fa-square",
-            classText: "todo-title",
-            date: "Monday",
-            checkChange: false,
-          },
-        ],
-        Sunday: [
-          {
-            title: "Sport",
-            active: false,
-            classCheck: "far fa-square",
-            classText: "todo-title",
-            date: "Sunday",
-            checkChange: false,
-          },
-        ],
+        Monday: [],
+        Sunday: [],
         Tuesday: [],
         Wednesday: [],
         Thursday: [],
@@ -243,8 +208,8 @@ class App extends React.Component {
           {/* {days.map((item,i) => { //роуты работают а BodyToDO не отображает, хотя данные верные
           return (
             <Route
-              key={`key${i}`}
-              path={`/${item}`}
+            key={`key${i}`}
+              path={`${item}`}
               redner={props => (
                 <BodyToDo
                   todoText={this.state.todoText[`${item}`]}
@@ -267,7 +232,6 @@ class App extends React.Component {
             path={"/Monday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Monday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -284,7 +248,6 @@ class App extends React.Component {
             path={"/Sunday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Sunday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -301,7 +264,6 @@ class App extends React.Component {
             path={"/Tuesday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Tuesday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -318,7 +280,6 @@ class App extends React.Component {
             path={"/Wednesday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Wednesday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -335,7 +296,6 @@ class App extends React.Component {
             path={"/Thursday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Thursday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -352,7 +312,6 @@ class App extends React.Component {
             path={"/Friday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Friday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -369,7 +328,6 @@ class App extends React.Component {
             path={"/Saturday"}
             render={props => (
               <BodyToDo
-                todoText={this.state.todoText.Saturday}
                 CurrentDate={this.state.CurrentDate}
                 handleClick={this.handleClick}
                 onDelete={this.onDelete}
@@ -393,31 +351,20 @@ class App extends React.Component {
         ) : null}
 
         <div className="block-add">
-          {this.state.ADD_Todo ? (
-            <InputTodo
-              onAddTodo={this.onAddTodo}
-              onChangeInput={this.onChangeInput}
-              InputValue={this.state.InputValue}
-            />
-          ) : null}
+          <InputTodo />
+
           <AddTodo />
         </div>
       </main>
     );
   }
 }
-
 function mapStateToProps(state) {
   return {
-    counter: state.count1.counter,
+    app: state.app,
   };
 }
-
-function myDispatch(dispatch) {
-  return {
-    onADD: () => dispatch({ type: "ADD1" }),
-    onSUB: () => dispatch({ type: "SUB1" }),
-  };
-}
-
-export default App;
+export default connect(
+  mapStateToProps,
+  {}
+)(App);

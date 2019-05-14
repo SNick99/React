@@ -1,0 +1,218 @@
+body {
+  background: whitesmoke;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 50px;
+}
+
+header {
+  width: 60%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #151515;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+header #container {
+  width: 100%;
+  text-align: center;
+}
+
+header #container #center {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100px;
+  color: #00bfff;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+header #container #right {
+  float: right;
+  width: 100px;
+  color: white;
+  font-size: 15px;
+}
+
+header #container #left {
+  float: left;
+  width: 100px;
+}
+
+header #container #left i {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+header #container #left i:hover {
+  color: #00bfff;
+  font-size: 23px;
+}
+
+.todo-list {
+  width: 60%;
+  margin: 0 auto;
+  /* //border-left: 1px solid #151515;
+  //border-right: 1px solid #151515; */
+  border-radius: 5px;
+  min-height: 0;
+  max-height: 336px;
+  overflow-y: scroll;
+}
+
+.todo-list .todo {
+  background-color: white;
+  height: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-left: 9px;
+}
+
+.todo-list .todo .checkbox {
+  margin-right: 10px;
+  border: 1px solid white;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.todo-list .todo .checkbox .fa-check-square {
+  color: #01df01;
+  transition: color 0.5s linear;
+}
+
+.todo-list .todo .checkbox .fa-square {
+  color: #848484;
+  transition: color 0.5s linear;
+}
+
+.todo-list .todo .todo-title {
+  color: #848484;
+  font-size: 16px;
+}
+
+.todo-list .todo .todo-title-check {
+  text-decoration: line-through;
+  color: #848484;
+  font-size: 16px;
+}
+
+.todo-list .todo .delete {
+}
+
+.todo-list .todo .delete {
+  display: block;
+  background-color: white;
+  border: 1px solid white;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  float: right;
+}
+
+.class1 {
+  margin: 0 auto;
+  height: 336px;
+}
+
+.block-add {
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border-top: 1px solid whitesmoke;
+  background-color: #151515;
+}
+
+.block-add .AddTodo {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.block-add .AddTodo:hover .fa-plus-square {
+  color: #01df01;
+}
+
+.block-add .AddTodo:hover .fa-window-close {
+  color: red;
+}
+
+.block-add .AddTodo button {
+  background-color: #151515;
+  border: 1px solid #151515;
+  cursor: pointer;
+  outline: none;
+}
+
+.block-add .AddTodo button .fa-plus-square {
+  font-size: 20px;
+  color: #00bfff;
+}
+
+.block-add .AddTodo button .fa-plus-square:hover {
+  color: #01df01;
+}
+
+.block-add .AddTodo button .fa-window-close {
+  font-size: 20px;
+  color: red;
+}
+
+.block-add .InputTodo {
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.block-add .InputTodo .Input_block {
+  height: 25px;
+}
+
+.block-add .InputTodo .Input_block input {
+  height: 100%;
+  outline-color: #00bfff;
+  padding-left: 5px;
+  border: 1px solid #151515;
+  box-sizing: border-box;
+}
+
+.block-add .InputTodo .Input_block button {
+  background-color: white;
+  border: 1px solid #151515;
+  color: #151515;
+  cursor: pointer;
+  outline: none;
+  margin-left: 10px;
+  height: 100%;
+}
+
+.block-add .InputTodo .Input_block button:hover {
+  color: white;
+  background-color: #00bfff;
+  border: 1px solid #00bfff;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-thumb {
+  border-width: 1px 1px 1px 2px;
+  border-color: #777;
+  background-color: #aaa;
+}
+::-webkit-scrollbar-thumb:hover {
+  border-width: 1px 1px 1px 2px;
+  border-color: #555;
+  background-color: #777;
+}
+::-webkit-scrollbar-track {
+  border-width: 0;
+}
+::-webkit-scrollbar-track:hover {
+  border-left: solid 1px #aaa;
+  background-color: #eee;
+}
