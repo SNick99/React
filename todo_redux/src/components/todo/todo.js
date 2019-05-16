@@ -80,7 +80,7 @@ const Todo = props => {
             onChange={props.onChange}
           />
           <button className="delete" onClick={() => changeToDoTitle()}>
-            <i class="fas fa-check" />
+            <i className="fas fa-check" />
           </button>
         </React.Fragment>
       ) : (

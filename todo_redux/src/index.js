@@ -9,7 +9,9 @@ import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
 
 const loggerMidleware = store => next => action => {
+  console.log(store.getState());
   const result = next(action);
+  console.log(result);
   console.log(store.getState());
   return result;
 };

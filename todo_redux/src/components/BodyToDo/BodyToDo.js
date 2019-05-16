@@ -11,12 +11,8 @@ const BodyToDo = props => (
           classCheck={todo.classCheck}
           classText={todo.classText}
           todoTitle={todo.title}
-          changeToDoTitle={props.changeToDoTitle}
-          onChangeInput1={props.onChangeInput1}
           ToDoArray={todo.checkChange}
-          InputValue1={props.InputValue1}
           i={index}
-          day={props.todoText.date}
         />
       );
     })}
